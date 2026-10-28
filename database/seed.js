@@ -14,15 +14,15 @@ db.exec(`
 `);
 
 const insertUser = db.prepare(
-  'INSERT INTO users (username, password_hash, nama, role, nim) VALUES (?, ?, ?, ?, ?)'
+  'INSERT INTO users (username, password_hash, nama, role, npm) VALUES (?, ?, ?, ?, ?)'
 );
 const insertDevice = db.prepare(
   'INSERT INTO devices (user_id, device_id) VALUES (?, ?)'
 );
 
-function buatUser(username, password, nama, role, nim, deviceId) {
+function buatUser(username, password, nama, role, npm, deviceId) {
   const hash = bcrypt.hashSync(password, 10);
-  const { lastInsertRowid } = insertUser.run(username, hash, nama, role, nim);
+  const { lastInsertRowid } = insertUser.run(username, hash, nama, role, npm);
   insertDevice.run(lastInsertRowid, deviceId);
   return Number(lastInsertRowid);
 }
@@ -31,9 +31,9 @@ function buatUser(username, password, nama, role, nim, deviceId) {
 const admin  = buatUser('admin',  'admin123',  'Admin Prodi',    'admin',     null,         'DEV-ADMIN-01');
 const dosen1 = buatUser('dosen1', 'dosen123',  'Dr. Budi',       'dosen',     null,         'DEV-DOSEN-01');
 const dosen2 = buatUser('dosen2', 'dosen123',  'Dr. Siti',       'dosen',     null,         'DEV-DOSEN-02');
-const mhs1   = buatUser('mhs1',   'mhs123',    'Andi Pratama',   'mahasiswa', '2210001',    'DEV-MHS-01');
-const mhs2   = buatUser('mhs2',   'mhs123',    'Rina Lestari',   'mahasiswa', '2210002',    'DEV-MHS-02');
-const mhs3   = buatUser('mhs3',   'mhs123',    'Dedi Kurniawan', 'mahasiswa', '2210003',    'DEV-MHS-03');
+const mhs1   = buatUser('mhs1',   'mhs123',    'Andi Pratama',   'mahasiswa', '2410001',    'DEV-MHS-01');
+const mhs2   = buatUser('mhs2',   'mhs123',    'Rina Lestari',   'mahasiswa', '2410002',    'DEV-MHS-02');
+const mhs3   = buatUser('mhs3',   'mhs123',    'Dedi Kurniawan', 'mahasiswa', '2410003',    'DEV-MHS-03');
 
 // --- Kelas (2 kelas, dosen berbeda) ---
 const insertKelas = db.prepare(
